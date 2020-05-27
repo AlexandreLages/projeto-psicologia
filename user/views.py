@@ -6,6 +6,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 
 from core.models import Usuario
+from core.models import Colaborador
 
 
 def login_view(request):
@@ -20,7 +21,10 @@ def login_view(request):
         if user is not None:
             login(request, user)
             usuario = Usuario.objects.get(user=user)
-            return redirect('/user/', {'message': 'Usuário logado com sucesso!'})
+            if is_colaborador(usuario):
+                return redirect('/user/colaborador/', {'message': 'Usuário logado com sucesso!'})
+            else:
+                return redirect('/user/paciente/', {'message': 'Usuário logado com sucesso!'})
         else:
             return render(request, 'login.html', {'message': 'Usuário/Senha inválidos!'})
 
@@ -31,6 +35,20 @@ def logout_view(request):
 
 
 @login_required
-def user_view(request):
+def colaborador_view(request):
     if request.method == 'GET':
-        return render(request, 'user.html')
+        return render(request, 'colaborador.html')
+
+
+@login_required
+def paciente_view(request):
+    if request.method == 'GET':
+        return render(request, 'paciente.html')
+
+
+@login_required
+def is_colaborador(usuario):
+    if Colaborador.objects.filter(usuario_ptr_id=usuario.id):
+        return True
+    else:
+        return False
