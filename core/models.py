@@ -29,6 +29,12 @@ class Paciente(Usuario):
         db_table = 'tbPaciente'
 
 
+class Administrador(Usuario):
+
+    class Meta:
+        db_table = 'tbAdministrador'
+
+
 class Atendimento(models.Model):
     data_atendimento = models.DateField(null=False)
     colaborador = models.OneToOneField(Colaborador, on_delete=models.DO_NOTHING)
