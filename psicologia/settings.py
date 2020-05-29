@@ -16,6 +16,8 @@ INSTALLED_APPS = [
     'core',
     'user',
     'blog',
+    'colaborador',
+    'paciente',
 ]
 
 MIDDLEWARE = [

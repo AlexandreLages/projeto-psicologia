@@ -22,11 +22,11 @@ def login_view(request):
             login(request, user)
             usuario = Usuario.objects.get(user=user)
             if is_colaborador(usuario):
-                return redirect('/user/colaborador/', {'message': 'Usuário logado com sucesso!'})
+                return redirect('/colaborador/', {'message': 'Usuário logado com sucesso!'})
             else:
-                return redirect('/user/paciente/', {'message': 'Usuário logado com sucesso!'})
+                return redirect('/paciente/', {'message': 'Usuário logado com sucesso!'})
         else:
-            return render(request, 'login.html', {'message': 'Usuário/Senha inválidos!'})
+            return redirect('/user/login/', {'message': 'Usuário/Senha inválidos!'})
 
 
 def logout_view(request):
@@ -34,19 +34,6 @@ def logout_view(request):
 	return redirect('/user/login/', {'message': 'Usuário logado com sucesso!'})
 
 
-@login_required
-def colaborador_view(request):
-    if request.method == 'GET':
-        return render(request, 'colaborador.html')
-
-
-@login_required
-def paciente_view(request):
-    if request.method == 'GET':
-        return render(request, 'paciente.html')
-
-
-@login_required
 def is_colaborador(usuario):
     if Colaborador.objects.filter(usuario_ptr_id=usuario.id):
         return True
