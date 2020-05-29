@@ -18,6 +18,7 @@ class Usuario(models.Model):
 class Colaborador(Usuario):
     crp = models.CharField(max_length=50, null=False)
     perfil = models.TextField(default='')
+    verificado = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'tbColaborador'
