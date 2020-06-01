@@ -26,6 +26,7 @@ def cadastro_colaborador_view(request):
 		cpf = request.POST['cpf']
 		rg = request.POST['rg']
 		crp = request.POST['crp']
+		perfil = request.POST['perfil']
 		colaborador = None
 
 		user = User.objects.filter(username=usuario)
@@ -40,7 +41,7 @@ def cadastro_colaborador_view(request):
 				telefone_fixo=telefone,
 				cpf=cpf,
 				rg=rg, email=email,
-				crp=crp
+				crp=crp, perfil=perfil
 			)
 
 			user = User.objects.get(username=usuario)
