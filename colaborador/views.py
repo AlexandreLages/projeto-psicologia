@@ -28,30 +28,27 @@ def cadastro_colaborador_view(request):
 		crp = request.POST['crp']
 		colaborador = None
 
-		if senha == confirma_senha:
-			user = User.objects.filter(username=usuario)
+		user = User.objects.filter(username=usuario)
 
-			if not user:
-				user = User.objects.create_user(usuario, email, senha)
-				user.save()
+		if not user:
+			user = User.objects.create_user(usuario, email, senha)
+			user.save()
 
-				colaborador = Colaborador(
-					nome=nome, 
-					telefone_celular=celular, 
-					telefone_fixo=telefone, 
-					cpf=cpf,
-					rg=rg, email=email, 
-					crp=crp
-				)
+			colaborador = Colaborador(
+				nome=nome,
+				telefone_celular=celular,
+				telefone_fixo=telefone,
+				cpf=cpf,
+				rg=rg, email=email,
+				crp=crp
+			)
 
-				user = User.objects.get(username=usuario)
-				colaborador.user = user
-				colaborador.save()
-			else:
-				return render(request, 'cadastro_colaborador.html', {'message': 'Já existe uma pessoa com esse usuário!'})
-
-			return redirect('/user/login/', {'message': 'Cadastro de colaborador realizado com sucesso!'})
+			user = User.objects.get(username=usuario)
+			colaborador.user = user
+			colaborador.save()
 		else:
-			return render(request, 'cadastro_colaborador.html', {'message': 'As senhas não coincidem!'})
+			return render(request, 'cadastro_colaborador.html', {'message': 'Já existe uma pessoa com esse usuário!'})
+
+		return redirect('/user/login/', {'message': 'Cadastro de colaborador realizado com sucesso!'})
 
 	return redirect('/user/login/')
