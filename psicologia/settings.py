@@ -100,3 +100,6 @@ LOGIN_URL = '/user/login/'
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+#Recaptcha google
+GOOGLE_RECAPTCHA_SECRET_KEY = '6LcwPv8UAAAAALOFnZ4fvR1aMTu5VSidmufMBXxD'
