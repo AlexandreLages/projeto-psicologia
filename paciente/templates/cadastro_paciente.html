@@ -5,51 +5,80 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <meta charset="utf-8">
   <title>Cadastro de Paciente</title>
+  <style>
+.vl {
+  border-left: 3px solid #d9d9d9;
+  height: 300px;
+}
+</style>
 </head>
 <body>
 
 <div class="container-fluid">
-  <div class="row">
-    <div class="card" style="width:60%; text-align: center; left: 20%; margin-top: 5%;">
+    <div class="card" style="width:80%; left: 10%; margin-top: 5%;">
       <div class="card-body">
-        <h1 class="h3 mb-3 font-weight-normal">Cadastro de Paciente</h1>
+        <div align="center">
+        <h1 class="h3 mb-3 font-weight-normal">Cadastre-se</h1></div>
+        <br/>
         <form action="{% url 'cadastro_paciente_view' %}" method="post">
           {% csrf_token %}
-          <div class="form-group row">
-            <div class="col-sm-12">
-              <input type="text" id="nome" name="nome" class="form-control" placeholder="Seu Nome" required autofocus>
+          <div class="row">
+            <div class="col">
+              <h5>Informações da conta</h5>
+              <br/>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="E-mail" required pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$">
+              </div>
+              <div class="form-group">
+                <label for="usuario">Usuário</label>
+                <input type="text" id="usuario" name="usuario" class="form-control" placeholder="Usuário" required minlength="4">
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-6">
+                  <label for="senha">Senha</label>
+                  <input type="password" id="senha" name="senha" class="form-control" placeholder="Senha" required minlength="6" autocomplete="off">
+                </div>
+                <div class="col-sm-6">
+                  <label for="confirmarSenha">Confirmar senha</label>
+                  <input type="password" id="confirmarSenha" name="confirmarSenha" class="form-control" placeholder="Confirmar Senha" requiredminlength="6" autocomplete="off">
+                </div>
+              </div>
+            </div>
+            <div class="vl"></div>
+            <div class="col">
+              <h5>Informações pessoais</h5>
+              <br/>
+              <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" name="nome" class="form-control" placeholder="Seu Nome" required autofocus>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-6">
+                  <label for="telefone">Telefone</label>
+                  <input type="text" id="telefone" name="telefone" class="form-control fixo-mask" placeholder="Telene Fixo">
+                </div>
+                <div class="col-sm-6">
+                  <label for="celular">Celular</label>
+                  <input type="text" id="celular" name="celular" class="form-control celular-mask" placeholder="Telefone Celular" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-6">
+                  <label for="cpf">CPF</label>
+                  <input type="text" id="cpf" name="cpf" class="form-control cpf-mask" placeholder="CPF" required>
+                </div>
+                <div class="col-sm-6">
+                  <label for="sexo">Sexo</label>
+                  <select id="sexo" class="form-control" name="sexo">
+                    <option value="M">Masculino</option>
+                    <option value="F">Feminino</option>
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="form-group row">
-            <div class="col-sm-4">
-              <input type="text" id="usuario" name="usuario" class="form-control" placeholder="Usuário" required minlength="4">
-            </div>
-            <div class="col-sm-4">
-              <input type="password" id="senha" name="senha" class="form-control" placeholder="Senha" required minlength="6" autocomplete="off">
-            </div>
-            <div class="col-sm-4">
-              <input type="password" id="confirmarSenha" name="confirmarSenha" class="form-control" placeholder="Confirmar Senha" requiredminlength="6" autocomplete="off">
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-sm-6">
-              <input type="email" id="email" name="email" class="form-control" placeholder="E-mail" required pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$">
-            </div>
-            <div class="col-sm-3">
-              <input type="text" id="telefone" name="telefone" class="form-control fixo-mask" placeholder="Telene Fixo" required>
-            </div>
-            <div class="col-sm-3">
-              <input type="text" id="celular" name="celular" class="form-control celular-mask" placeholder="Telefone Celular" required>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-sm-6">
-              <input type="text" id="cpf" name="cpf" class="form-control cpf-mask" placeholder="CPF" required>
-            </div>
-            <div class="col-sm-6">
-              <input type="text" id="rg" name="rg" class="form-control" placeholder="RG" required>  
-            </div>
-          </div>
+          </br>
           <div class="form-group row">
             <div class="col-sm-4">
             </div>
@@ -60,15 +89,13 @@
             </div>
           </div>
         </form>
-
         {% if message %}
         <div style="text-align: center; font: 12pt; color: red;">
           {{message}}
         </div>
-        {% endif %}        
+        {% endif %}
       </div>
-    </div>    
-  </div>
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
