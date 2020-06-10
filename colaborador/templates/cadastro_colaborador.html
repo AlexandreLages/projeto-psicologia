@@ -13,7 +13,7 @@
     <div class="card" style="width:60%; text-align: center; left: 20%; margin-top: 5%;">
       <div class="card-body">
         <h1 class="h3 mb-3 font-weight-normal">Cadastro de Colaborador</h1>
-        <form action="{% url 'cadastro_colaborador_view' %}" method="post">
+        <form action="{% url 'cadastro_colaborador_view' %}" method="post" enctype="multipart/form-data">
           {% csrf_token %}
           <div class="form-group row">
             <div class="col-sm-12">
@@ -58,6 +58,7 @@
               <textarea rows="9" name="perfil" class="form-control" placeholder="Perfil"></textarea>
             </div>
           </div>
+          <input id="id_imagem" type="file" name="imagem" value="Foto">
           <div class="g-recaptcha" data-sitekey="6LcwPv8UAAAAAMlwaQf4qXVwYZG9PxqShQ3NXyxv" align="center"></div>
           <br/>
           <div class="form-group row">

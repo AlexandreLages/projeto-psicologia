@@ -20,6 +20,7 @@ def cadastro_colaborador_view(request):
 	if request.method == 'GET':
 		return render(request, 'cadastro_colaborador.html')
 	elif request.method == 'POST':
+		foto = request.FILES['imagem']
 
 		''' Begin reCAPTCHA validation '''
 		recaptcha_response = request.POST.get('g-recaptcha-response')
@@ -61,7 +62,8 @@ def cadastro_colaborador_view(request):
 					telefone_fixo=telefone,
 					cpf=cpf,
 					rg=rg, email=email,
-					crp=crp, perfil=perfil
+					crp=crp, perfil=perfil,
+					foto=foto
 				)
 
 				user = User.objects.get(username=usuario)

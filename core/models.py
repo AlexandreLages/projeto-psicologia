@@ -25,6 +25,7 @@ class Colaborador(Usuario):
     crp = models.CharField(max_length=50, null=False)
     perfil = models.TextField(default='')
     verificado = models.BooleanField(default=False)
+    foto = models.ImageField(upload_to='imagens/', default='imagens/None/no-img.jpg')
 
     class Meta:
         db_table = 'tbColaborador'
