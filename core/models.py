@@ -5,7 +5,8 @@ from django.contrib.auth.models import User
 class Usuario(models.Model):
     SEXO_CHOICES = {
         ("F", "Feminino"),
-        ("M", "Masculino")
+        ("M", "Masculino"),
+        ("O", "Outro")
     }
 
     user = models.OneToOneField(User, on_delete=models.DO_NOTHING)

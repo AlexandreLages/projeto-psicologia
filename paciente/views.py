@@ -25,6 +25,7 @@ def cadastro_paciente_view(request):
 		celular = request.POST['celular']
 		cpf = request.POST['cpf']
 		sexo = request.POST['sexo']
+		orientacao_sexual = request.POST['orientacao']
 		paciente = None
 
 		user = User.objects.filter(username=usuario)
@@ -39,7 +40,8 @@ def cadastro_paciente_view(request):
 				telefone_fixo=telefone,
 				cpf=cpf,
 				email=email,
-				sexo=sexo
+				sexo=sexo,
+				orientacao_sexual=orientacao_sexual
 			)
 
 			user = User.objects.get(username=usuario)
