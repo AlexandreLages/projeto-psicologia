@@ -2,8 +2,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from django.shortcuts import render
+import requests, json
 
 from core.models import Paciente
+from core.utils.Estado import Estado
 
 
 @login_required
@@ -14,7 +16,12 @@ def paciente_view(request):
 
 def cadastro_paciente_view(request):
 	if request.method == 'GET':
-		return render(request, 'cadastro_paciente.html')
+		r = requests.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados', params={'orderBy':'nome'})
+		estados = json.loads(r.text)
+		lista_estados = []
+		for estado in estados:
+			lista_estados.append(Estado(estado['id'], estado['nome']))
+		return render(request, 'cadastro_paciente.html', {'estados': lista_estados})
 	elif request.method == 'POST':
 		usuario = request.POST['usuario']
 		senha = request.POST['senha']
@@ -48,7 +55,7 @@ def cadastro_paciente_view(request):
 			paciente.user = user
 			paciente.save()
 		else:
-			return render(request, 'cadastro_paciente.html', {'message': 'Já existe uma pessoa com esse usuário!'})
+			return render('cadastro_paciente.html', {'message': 'Já existe uma pessoa com esse usuário!'})
 
 		return redirect('/user/login/', {'message': 'Cadastro de paciente realizado com sucesso!'})
 

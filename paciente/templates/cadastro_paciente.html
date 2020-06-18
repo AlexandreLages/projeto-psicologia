@@ -87,6 +87,14 @@
                     <option value="INDEFINIDO">Prefiro não informar</option>
                   </select>
                 </div>
+                <div class="col-sm-6">
+                  <label for="estado">Estado</label>
+                  <select id="estado" class="form-control" name="estado" onchange="municipiosEstado()">
+                    {% for entry in estados %}
+                      <option value="{{ entry.id_estado }}">{{ entry.nome }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
               </div>
             </div>
           </div>
@@ -124,6 +132,11 @@
       return false;
     }
     return true;
+  }
+
+  function municipiosEstado(){
+    var estado = document.getElementById("estado").value;
+    console.log(estado);
   }
 </script>
 
