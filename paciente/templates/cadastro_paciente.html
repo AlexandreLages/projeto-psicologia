@@ -80,7 +80,7 @@
               <div class="form-group row">
                 <div class="col-sm-6">
                   <label for="sexo">Orientação sexual</label>
-                  <select id="orientacao" class="form-control" name="orientacao">
+                  <select id="orientacao" class="form-control" name="orientacao" required>
                     <option value="HETERO">Heterossexual</option>
                     <option value="HOMO">Homossexual</option>
                     <option value="BI">Bissexual</option>
@@ -89,9 +89,21 @@
                 </div>
                 <div class="col-sm-6">
                   <label for="estado">Estado</label>
-                  <select id="estado" class="form-control" name="estado" onchange="municipiosEstado()">
+                  <select id="estado" class="form-control" name="estado" required>
+                      <option value="">Escolha</option>
                     {% for entry in estados %}
                       <option value="{{ entry.id_estado }}">{{ entry.nome }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                  <div class="col-sm-6">
+                  <label for="cidade">Cidade</label>
+                    <select id="cidade" class="form-control" name="cidade" required>
+                      <option value="">----</option>
+                    {% for entry in cidades %}
+                      <option value="{{ entry.nome }}">{{ entry.nome }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -118,7 +130,7 @@
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="{% static 'js/jquery.mask.min.js' %}"></script>
@@ -132,12 +144,23 @@
       return false;
     }
     return true;
-  }
+  };
 
-  function municipiosEstado(){
-    var estado = document.getElementById("estado").value;
-    console.log(estado);
-  }
+  $(document).ready(function(){
+    $('select#estado').change(function (){
+        var opcaoSelecionada = $(this).find("option:selected");
+        var valor = opcaoSelecionada.val();
+        dado = {'id_estado' : valor};
+        $.ajax({
+        url: '/paciente/get_cidades/',
+        data: dado,
+        success: function (data) {
+          $("#cidade").html(data);
+        }
+      });
+    });
+  });
+
 </script>
 
 </body>
