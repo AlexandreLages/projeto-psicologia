@@ -32,6 +32,34 @@ class Colaborador(Usuario):
         db_table = 'tbColaborador'
 
 
+class Especialidade(models.Model):
+    nome = models.CharField(max_length=255, null=False, default='')
+    descricao = models.CharField(max_length=255, null=True, default='')
+    colaboradores = models.ManyToManyField(Colaborador)
+
+    class Meta:
+        db_table = 'tbEspecialidade'
+
+
+class Horario(models.Model):
+    SEMANA_CHOICES = {
+        (1, "Domingo"),
+        (2, "Segunda-Feira"),
+        (3, "Terça-Feira"),
+        (4, "Quarta-Feira"),
+        (5, "Quinta-Feira"),
+        (6, "Sexta-Feira"),
+        (7, "Sábado"),
+    }
+
+    dia = models.CharField(max_length=1, choices=SEMANA_CHOICES, null=False)
+    hora = models.CharField(max_length=5, null=False)
+    colaborador = models.ForeignKey(Colaborador, on_delete=models.DO_NOTHING, related_name = 'horarios')
+
+    class Meta:
+        db_table = 'tbHorario'
+
+
 class Paciente(Usuario):
     ORIENTACAO_CHOICES = {
         ("HETERO", "Heterossexual"),
@@ -53,10 +81,26 @@ class Administrador(Usuario):
         db_table = 'tbAdministrador'
 
 
-class Atendimento(models.Model):
-    data_atendimento = models.DateField(null=False)
-    colaborador = models.OneToOneField(Colaborador, on_delete=models.DO_NOTHING)
-    paciente = models.OneToOneField(Paciente, on_delete=models.DO_NOTHING)
+class Agendamento(models.Model):
+    STATUS_CHOICES = {
+        ("ANALISE", "Em Análise"),
+        ("ACEITO", "Aceito"),
+        ("REALIZADO", "Realizado"),
+        ("CANCELADO", "Cancelado"),
+    }
+
+    TIPO_CHOICES = {
+        ("PLANTAO", "Plantão"),
+        ("PSICOTERAPIA", "Psicoterapia"),
+    }
+
+    data = models.DateField(null=False)
+    horario = models.CharField(max_length=5, null=False)
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES, null=False)
+    motivo = models.CharField(max_length=255, null=False)
+    tipo = models.CharField(max_length=50, choices=TIPO_CHOICES, null=False)
+    colaborador = models.ForeignKey(Colaborador, on_delete=models.DO_NOTHING, related_name = 'agendamentos', null=True)
+    paciente = models.ForeignKey(Paciente, on_delete=models.DO_NOTHING, related_name = 'agendamentos', null=True)
 
     class Meta:
-        db_table = 'tbAtendimento'
+        db_table = 'tbAgendamento'
