@@ -20,7 +20,7 @@
         <div align="center">
         <h1 class="h3 mb-3 font-weight-normal">Cadastre-se</h1></div>
         <br/>
-        <form action="{% url 'cadastro_paciente_view' %}" method="post">
+        <form action="{% url 'cadastro_paciente_view' %}" method="post" id="form-teste">
           {% csrf_token %}
           <div class="row">
             <div class="col">
@@ -100,10 +100,10 @@
               <div class="form-group row">
                   <div class="col-sm-6">
                   <label for="cidade">Cidade</label>
-                    <select id="cidade" class="form-control" name="cidade" required>
+                    <select id="cidade" class="form-control" required>
                       <option value="">----</option>
-                    {% for entry in cidades %}
-                      <option value="{{ entry.nome }}">{{ entry.nome }}</option>
+                    {% for c in cidades %}
+                      <option value="{{ c.nome }}">{{ c.nome }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -155,7 +155,9 @@
         url: '/paciente/get_cidades/',
         data: dado,
         success: function (data) {
-          $("#cidade").html(data);
+          var result = $(data).find('#cidade').html();
+          console.log(result)
+          $("#cidade").html(result);
         }
       });
     });
